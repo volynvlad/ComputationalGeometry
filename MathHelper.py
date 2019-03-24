@@ -45,9 +45,50 @@ def point_min(p):
     for i in range(len(p)):
         if minimum[1] == p[i][1] and minimum[0] > p[i][0]:
             minimum = p[i]
-        if minimum[1] < p[i][1]:
+        if minimum[1] <= p[i][1]:
             minimum = p[i]
     return minimum
+
+def point_min1(p):
+    """
+    :param p: points
+    :return: min by x and if needed min by y
+    """
+    minimum = p[0]
+    for i in range(len(p)):
+        if minimum[1] == p[i][1] and minimum[0] < p[i][0]:
+            minimum = p[i]
+        if minimum[1] <= p[i][1]:
+            minimum = p[i]
+    return minimum
+
+
+def point_min_by_x(p):
+    """
+    p - points
+    return - min by x and if needed min by y
+    """
+    minimum = p[0]
+    for i in p:
+        if minimum[0] == i[0] and minimum[1] > i[0]:
+            minimum = i
+        if minimum[0] >= i[0]:
+           minimum = i
+    return minimum
+
+
+def point_max_by_x(p):
+    """
+    p - points
+    return - max by x and if needed min by y
+    """
+    maximum = p[0]
+    for i in p:
+        if maximum[0] == i[0] and maximum[1] > i[0]:
+            maximum = i
+        if maximum[0] <= i[0]:
+           maximum = i
+    return maximum
 
 
 def oct(v):
@@ -75,6 +116,17 @@ def oct(v):
 def cos_num(p1, p2):
     return (p2[0] - p1[0]) / length(p1, p2)
 
+def cos_num_abs(p1, p2):
+    return math.fabs(p2[0] - p1[0]) / length(p1, p2)
 
 def scalar(p1, p2):
-    return p1[0] * p2[0] + p1[1] + p2[1]
+    return p1[0] * p2[0] + p1[1] * p2[1]
+
+def triangle_square(p1, p2, p3):
+    return abs(determinant(p1, p2, p3)) / 2
+
+def perimeter(p):
+    sum = 0
+    for i in range(len(p)):
+        sum = sum + length(p[i - 1], p[i])
+    return sum

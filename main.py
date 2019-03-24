@@ -1,3 +1,4 @@
+#!/bin/bash/python 
 import Generate
 from Draw import *
 from MathHelper import *
@@ -131,10 +132,15 @@ def main_lab4():
 
 
 def main_lab5():
-    leng = 100
+    leng = 10
     p = [[random.randint(100, 700), random.randint(100, 700)] for _ in range(leng)]
     draw_lab5(p)
 
+
+def main_lab6():
+    leng = 100
+    p = [[random.randint(100, 700), random.randint(100, 700)] for _ in range(leng)]
+    draw_lab6(p)
 
 if __name__ == "__main__":
     print("-------")
@@ -143,9 +149,11 @@ if __name__ == "__main__":
     print("|3 lab|")
     print("|4 lab|")
     print("|5 lab|")
+    print("|6 lab|")
     print("-------")
     print("Choose something.(q - quit)")
     x = input()
+
     if x == '1':
         main_lab1()
     elif x == '2':
@@ -156,3 +164,5 @@ if __name__ == "__main__":
         main_lab4()
     elif x == '5':
         main_lab5()
+    elif x == '6':
+        main_lab6()

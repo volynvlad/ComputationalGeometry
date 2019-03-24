@@ -5,6 +5,9 @@ import math
 import Point
 from color import *
 from ConvexHull import *
+from diameter import slow_diameter
+from diameter import fast_diameter
+from MathHelper import perimeter
 
 pygame.font.init()
 size = [800, 800]
@@ -18,10 +21,10 @@ def draw_lines(p, color, screen):
         pygame.draw.line(screen, color, p[i], p[i + 1], 5)
 
 
-def draw_arrow(screen, colour, start, end, coord=False, arrow=False):
+def draw_arrow(screen, colour, start, end, coord=False, arrow=False, width=2):
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     dist = 40
-    pygame.draw.line(screen, colour, start, end, 2)
+    pygame.draw.line(screen, colour, start, end, width)
     rotation = math.degrees(math.atan2(start[1] - end[1], end[0] - start[0])) + 90
     if arrow:
         pygame.draw.polygon(screen, colour,
@@ -212,11 +215,16 @@ def draw_lab5(p):
     points_move = []
     chs_move = []
 
-
-
+    n = len(p)
     pygame.display.set_caption('Cartoon')
     window = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
+    for i in p:
+        points_move.append(Point.Point(i[0], i[1],
+            random.randint(1, 2) * (-1)
+            ** random.randint(0, 1),
+            random.randint(1, 2) * (-1)
+            ** random.randint(0, 1)))
 
     run = True
     while run:
@@ -225,30 +233,74 @@ def draw_lab5(p):
                 run = False
 
         window.fill(WHITE)
-        clock.tick(50)
-
+        clock.tick(10)
         ch = jarvis(p)
-        p = [item for item in p if item not in ch]
-        for i in range(len(p)):
-            points_move.append(Point.Point(p[i][0], p[i][1], random.randint(-5, 5), random.randint(-5, 5)))
+
+        for i in range(len(points_move)):
+            points_move[i].draw(window, BLACK)
+            points_move[i].move()
+            p[i] = points_move[i].get_point()
+
+
         for i in range(len(ch)):
-            chs_move.append(Point.Point(ch[i][0], ch[i][1], random.randint(-5, 5), random.randint(-5, 5)))
+            draw_arrow(window, RED, [ch[i - 1][0], ch[i - 1][1]],
+                    [ch[i][0],ch[i][1]], width = 3)
 
-        for i in range(len(chs_move)):
-            draw_arrow(window, RED, [chs_move[i - 1].x, chs_move[i - 1].y], [chs_move[i].x, chs_move[i].y])
 
-        for point_move in points_move:
-            point_move.draw(window, BLACK)
-            point_move.move()
+        i1, i2 = slow_diameter(p)
+        draw_arrow(window, GREEN, p[i1], p[i2], width = 4)
+        i3, i4 = fast_diameter(ch)
+        draw_arrow(window, BLUE, ch[i3], ch[i4], width = 4)
 
-        for point_move in chs_move:
-            point_move.draw(window, BLUE)
-            point_move.move()
-
-        chs_move.clear()
-        points_move.clear()
-
+        points_move[i1].set_speed(-points_move[i1].v_x, -points_move[i1].v_y)
+        points_move[i2].set_speed(-points_move[i2].v_x, -points_move[i2].v_y)
         pygame.display.flip()
 
+    pygame.quit()
+
+
+def draw_lab6(p):
+    points_move = []
+    chs_move = []
+
+    n = len(p)
+    pygame.display.set_caption('Cartoon')
+    window = pygame.display.set_mode(size)
+    clock = pygame.time.Clock()
+    for i in p:
+        points_move.append(Point.Point(i[0], i[1],
+            random.randint(1, 2) * (-1)
+            ** random.randint(0, 1),
+            random.randint(1, 2) * (-1)
+            ** random.randint(0, 1)))
+
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        window.fill(WHITE)
+        clock.tick(10)
+        
+        for i in range(len(points_move)):
+            points_move[i].move()
+            p[i] = points_move[i].get_point()
+            points_move[i].draw(window, BLACK)
+
+        ch = quick_hull(p)
+        
+        for i in range(len(ch)):
+            draw_arrow(window, RED, [ch[i - 1][0], ch[i - 1][1]],
+                    [ch[i][0],ch[i][1]], width = 3)
+        print(perimeter(ch))
+        if perimeter(ch) > 2300:
+            for x in ch:
+                index = p.index(x)
+                points_move[index].set_speed(-points_move[index].v_x,
+                        -points_move[index].v_y)
+        
+        pygame.display.flip()
 
     pygame.quit()
+

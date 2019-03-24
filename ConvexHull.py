@@ -2,7 +2,13 @@ from MathHelper import point_min
 from MathHelper import cos_num
 import PointRelative as pR
 from MathHelper import vector1
+from MathHelper import cos_num_abs
+from MathHelper import length
+from MathHelper import point_max_by_x
+from MathHelper import point_min_by_x
+from MathHelper import triangle_square
 
+import math
 
 def convex_hull(p):
     ch = []
@@ -90,7 +96,7 @@ def jarvis(p):
             v1 = vector1(p0, [p0[0] - 1, p0[1]])
             v2 = vector1(p0, p[i])
             if pR.point_relative(p0, [p0[0] - 1, p0[1]], p[i]) == -1:
-                cs = cos_num(v1, v2)
+                cs = cos_num(v2, v1)
                 if cs >= max_cos:
                     max_cos = cs
                     p_mc = p[i]
@@ -98,4 +104,53 @@ def jarvis(p):
             ch.append(p_mc)
 
     return ch
+
+def far_point(p1, p2, set):
+    """
+    p1, p2 - line 
+    set - points
+    return
+        most far point in set from p1 p2
+    """
+    far_p = []
+    max = 0
+    for x in set:
+        if triangle_square(p1, p2, x) > max:
+            max = triangle_square(p1, p2, x)
+            far_p = x
+    return far_p
+
+
+def quick_hull(p):
+    s_l = []
+    s_r = []
+    ch = []
+    p_l = point_min_by_x(p)
+    p_r = point_max_by_x(p)
+    for x in p:
+        if pR.is_left(p_l, p_r, x):
+            s_l.append(x)
+        if pR.is_right(p_l, p_r, x):
+            s_r.append(x)
+    ch.append(p_l)
+    ch.append(p_r)
+    iter_hull(s_l, p_l, p_r, ch)
+    iter_hull(s_r, p_r, p_l, ch)
+    ch.append(p_l)
+    return ch
+
+
+def iter_hull(points, left, right, ch):
+    sl = []
+    for x in points:
+        if pR.is_left(left, right, x):
+            sl.append(x)
+
+    if sl:
+        lrp = far_point(right, left, sl)
+        ch.insert(ch.index(left) + 1, lrp)
+        iter_hull(sl, left, lrp, ch)
+        iter_hull(sl, lrp, right, ch)
+
+
 
