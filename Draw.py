@@ -280,14 +280,14 @@ def draw_lab6(p):
 
         window.fill(WHITE)
         clock.tick(10)
-        
+
         for i in range(len(points_move)):
             points_move[i].move(size)
             p[i] = points_move[i].get_point()
             points_move[i].draw(window, BLACK)
 
         ch = quick_hull(p)
-        
+
         for i in range(len(ch)):
             draw_arrow(window, RED, [ch[i - 1][0], ch[i - 1][1]],
                     [ch[i][0],ch[i][1]], width = 3)
@@ -297,7 +297,7 @@ def draw_lab6(p):
                 index = p.index(x)
                 points_move[index].set_speed(-points_move[index].v_x,
                         -points_move[index].v_y)
-        
+
         pygame.display.flip()
 
     pygame.quit()

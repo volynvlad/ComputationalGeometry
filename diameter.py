@@ -30,7 +30,6 @@ def fast_diameter(ch):
     #pdb.set_trace()
     max = -1
     k = len(ch)
-    print("length = ", k)
     ch = ch.copy()
     ch.append(ch[0])
     i = 1
@@ -39,7 +38,7 @@ def fast_diameter(ch):
         i = i + 1
     start = i
     j = 0
-    while i < k and j < k and start < k:
+    while True:
         while triangle_square(ch[j], ch[j + 1] , ch[i]) <= triangle_square(ch[j], ch[j + 1], ch[i + 1]) and start < k:
             i = i + 1
         end = i
@@ -50,6 +49,7 @@ def fast_diameter(ch):
                 start = end
                 j = j + 1
             a = a + 1
-    print("indexes = (%d, %d)"% (i, j))
+        if i < k and j < k:
+            break
     return i, j
 
