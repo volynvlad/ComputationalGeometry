@@ -1,6 +1,8 @@
 from MathHelper import length
 from MathHelper import triangle_square
 from MathHelper import distance
+import pdb
+
 def slow_diameter(p):
     """
     p - points
@@ -25,6 +27,7 @@ def fast_diameter(ch):
     return:
         indexes of two points
     """
+    #pdb.set_trace()
     max = -1
     k = len(ch)
     print("length = ", k)
@@ -36,16 +39,17 @@ def fast_diameter(ch):
         i = i + 1
     start = i
     j = 0
-    while ch[0] != ch[i]:
-        while triangle_square(ch[j], ch[j + 1] , ch[i]) <= triangle_square(ch[j],
-                ch[j + 1], ch[i + 1]) and start <= k - 1:
+    while i < k and j < k and start < k:
+        while triangle_square(ch[j], ch[j + 1] , ch[i]) <= triangle_square(ch[j], ch[j + 1], ch[i + 1]) and start < k:
             i = i + 1
         end = i
-        for a in range(start, end + 1):
-            if distance(ch[a], ch[a + 1], ch[j]) > max:
-                max = distance(ch[a], ch[a + 1], ch[j])
+        a = start
+        while a < end:
+            if length(ch[a], ch[j]) > max:
+                max = length(ch[a], ch[j])
                 start = end
                 j = j + 1
+            a = a + 1
     print("indexes = (%d, %d)"% (i, j))
     return i, j
 

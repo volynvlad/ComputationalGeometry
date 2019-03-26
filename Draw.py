@@ -165,7 +165,7 @@ def draw_lab3(ch, points, simple_polygon):
 
         for point_move in points_move:
             point_move.draw(window, BLACK)
-            point_move.move()
+            point_move.move(size)
             point_move.convex_collision(ch)
             point_move.simple_collision(simple_polygon)
 
@@ -236,7 +236,7 @@ def draw_lab5(p):
         ch = jarvis(p)
         for i in range(len(points_move)):
             points_move[i].draw(window, BLACK)
-            points_move[i].move()
+            points_move[i].move(size)
             p[i] = points_move[i].get_point()
 
 
@@ -282,7 +282,7 @@ def draw_lab6(p):
         clock.tick(10)
         
         for i in range(len(points_move)):
-            points_move[i].move()
+            points_move[i].move(size)
             p[i] = points_move[i].get_point()
             points_move[i].draw(window, BLACK)
 

@@ -25,7 +25,6 @@ def angle(p1, p0, p2):
 
 
 def min_and_max(p):
-    assert len(p) == 2
     minimum = p[0]
     maximum = p[0]
     for i in range(len(p)):

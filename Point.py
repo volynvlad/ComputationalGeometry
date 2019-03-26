@@ -12,10 +12,11 @@ class Point:
         self.v_x = v_x
         self.v_y = v_y
 
-    def move(self):
-        if abs(self.x) > 800:
+    def move(self, size):
+        assert len(size) == 2
+        if abs(self.x) > size[0]:
             self.v_x = 0
-        if abs(self.y) > 800:
+        if abs(self.y) > size[1]:
             self.v_y = 0
         self.x = self.x + self.v_x
         self.y = self.y + self.v_y
