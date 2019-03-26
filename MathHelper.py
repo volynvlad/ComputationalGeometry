@@ -2,14 +2,22 @@ import math
 
 
 def determinant(p1, p2, p):
+    assert len(p1) == 2
+    assert len(p2) == 2
+    assert len(p) == 2
     return (p2[0] - p1[0])*(p[1] - p1[1]) - (p2[1] - p1[1])*(p[0] - p1[0])
 
 
 def length(p1, p2):
+    assert len(p1) == 2
+    assert len(p2) == 2
     return math.sqrt((p1[0] - p2[0])*(p1[0] - p2[0]) + (p1[1] - p2[1])*(p1[1] - p2[1]))
 
 
 def angle(p1, p0, p2):
+    assert len(p1) == 2
+    assert len(p0) == 2
+    assert len(p2) == 2
     ca = (p1[0] - p0[0])*(p2[0] - p0[0]) + (p1[1] - p0[1])*(p2[1] - p0[1])
     ca = ca / (length(p1, p0) * length(p2, p0))
     ca = math.acos(ca)
@@ -17,6 +25,7 @@ def angle(p1, p0, p2):
 
 
 def min_and_max(p):
+    assert len(p) == 2
     minimum = p[0]
     maximum = p[0]
     for i in range(len(p)):
@@ -28,6 +37,8 @@ def min_and_max(p):
 
 
 def vector1(p1, p2):
+    assert len(p1) == 2
+    assert len(p2) == 2
     x1 = p1[0]
     x2 = p2[0]
     y1 = p1[1]
@@ -92,6 +103,7 @@ def point_max_by_x(p):
 
 
 def oct(v):
+    assert len(v) == 2
     x = v[0]
     y = v[1]
     if 0 <= y < x:
@@ -114,15 +126,25 @@ def oct(v):
 
 
 def cos_num(p1, p2):
+    assert len(p1) == 2
+    assert len(p2) == 2
     return (p2[0] - p1[0]) / length(p1, p2)
 
 def cos_num_abs(p1, p2):
+    assert len(p1) == 2
+    assert len(p2) == 2
+
     return math.fabs(p2[0] - p1[0]) / length(p1, p2)
 
 def scalar(p1, p2):
+    assert len(p1) == 2
+    assert len(p2) == 2
     return p1[0] * p2[0] + p1[1] * p2[1]
 
 def triangle_square(p1, p2, p3):
+    assert len(p1) == 2
+    assert len(p2) == 2
+    assert len(p3) == 2
     return abs(determinant(p1, p2, p3)) / 2
 
 def perimeter(p):
@@ -130,3 +152,12 @@ def perimeter(p):
     for i in range(len(p)):
         sum = sum + length(p[i - 1], p[i])
     return sum
+
+def distance(p1, p2, p):
+    assert len(p1) == 2
+    assert len(p2) == 2
+    assert len(p) == 2
+    A = p1[1] - p2[1]
+    B = p2[0] - p1[0]
+    C = p1[0] * p2[1] - p2[0] * p1[1]
+    return abs(A * p[0] + B * p[1] + C) / math.sqrt(A ** 2 + B ** 2)

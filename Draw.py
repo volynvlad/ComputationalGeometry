@@ -214,7 +214,6 @@ def draw_lab4(p):
 def draw_lab5(p):
     points_move = []
     chs_move = []
-
     n = len(p)
     pygame.display.set_caption('Cartoon')
     window = pygame.display.set_mode(size)
@@ -235,7 +234,6 @@ def draw_lab5(p):
         window.fill(WHITE)
         clock.tick(10)
         ch = jarvis(p)
-
         for i in range(len(points_move)):
             points_move[i].draw(window, BLACK)
             points_move[i].move()

@@ -102,7 +102,7 @@ def jarvis(p):
                     p_mc = p[i]
         if p_mc:
             ch.append(p_mc)
-
+    ch.pop()
     return ch
 
 def far_point(p1, p2, set):
@@ -142,6 +142,7 @@ def quick_hull(p):
 
 def iter_hull(points, left, right, ch):
     sl = []
+    
     for x in points:
         if pR.is_left(left, right, x):
             sl.append(x)

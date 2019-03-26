@@ -1,5 +1,6 @@
 from MathHelper import length
 from MathHelper import triangle_square
+from MathHelper import distance
 def slow_diameter(p):
     """
     p - points
@@ -16,7 +17,6 @@ def slow_diameter(p):
                 i1 = i
                 i2 = j
                 max = length(p[i], p[j])
-
     return i1, i2
 
 def fast_diameter(ch):
@@ -37,14 +37,15 @@ def fast_diameter(ch):
     start = i
     j = 0
     while ch[0] != ch[i]:
-        while triangle_square(ch[j], ch[j + 1], ch[start]) <= triangle_square(ch[j], ch[j + 1], ch[start + 1]) and i < k - 1:
-            start = start + 1
+        while triangle_square(ch[j], ch[j + 1] , ch[i]) <= triangle_square(ch[j],
+                ch[j + 1], ch[i + 1]) and start <= k - 1:
+            i = i + 1
         end = i
-        if triangle_square(ch[start], ch[start + 1], ch[j]) > max:
-            max = triangle_square(ch[start], ch[start + 1], ch[j])
-            start = end
-            j = j + 1
-            print("maximum = ", max)
-
-    return i + 1, j
+        for a in range(start, end + 1):
+            if distance(ch[a], ch[a + 1], ch[j]) > max:
+                max = distance(ch[a], ch[a + 1], ch[j])
+                start = end
+                j = j + 1
+    print("indexes = (%d, %d)"% (i, j))
+    return i, j
 
