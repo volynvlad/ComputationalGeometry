@@ -217,8 +217,8 @@ def dynamic_convex_hull(p, ch):
             new_ch = ch
         else:
             index = ch.index(k[0])
-            k.remove(k[0])
-            k.remove(k[-1])
+            del k[0]
+            del k[-1]
             new_ch = [item for item in ch if item not in k]
             new_ch.insert(index + 1, point)
     return new_ch
