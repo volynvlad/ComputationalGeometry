@@ -4,6 +4,7 @@ from MathHelper import distance
 import pdb
 
 def slow_diameter(p):
+    assert len(p) > 0
     """
     p - points
     return:
@@ -21,7 +22,9 @@ def slow_diameter(p):
                 max = length(p[i], p[j])
     return i1, i2
 
+
 def fast_diameter(ch):
+    assert len(ch) > 0
     """
     ch - convex hull
     return:
@@ -30,26 +33,26 @@ def fast_diameter(ch):
     #pdb.set_trace()
     max = -1
     k = len(ch)
-    ch = ch.copy()
     ch.append(ch[0])
     i = 1
-    while triangle_square(ch[k - 1], ch[0], ch[i]) < triangle_square(ch[k - 1],
-            ch[0], ch[i + 1]):
+    temp = 0
+    while triangle_square(ch[k - 1], ch[0], ch[i + 1]) > triangle_square(ch[k - 1], ch[0], ch[i]):
         i = i + 1
     start = i
+    print("start = %d" % start)
     j = 0
-    while True:
-        while triangle_square(ch[j], ch[j + 1] , ch[i]) <= triangle_square(ch[j], ch[j + 1], ch[i + 1]) and start < k:
-            i = i + 1
-        end = i
-        a = start
-        while a < end:
+    while  temp < k:
+        temp = start
+        while triangle_square(ch[j], ch[j + 1] , ch[temp + 1]) >= triangle_square(ch[j], ch[j + 1], ch[temp]):
+           temp = temp + 1
+           if temp >= k:
+               break
+        end = temp
+        for a in range(start, end + 1):
             if length(ch[a], ch[j]) > max:
                 max = length(ch[a], ch[j])
                 start = end
                 j = j + 1
-            a = a + 1
-        if i < k and j < k:
-            break
-    return i, j
+    print("result - (%d, %d)" % (start, j))
+    return start, j
 

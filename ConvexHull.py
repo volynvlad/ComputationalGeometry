@@ -7,10 +7,13 @@ from MathHelper import length
 from MathHelper import point_max_by_x
 from MathHelper import point_min_by_x
 from MathHelper import triangle_square
+from MathHelper import determinant as det
+from MathHelper import scalar_prod
 
 import math
 
 def convex_hull(p):
+    assert len(p) > 0
     ch = []
 
     p = p.copy()
@@ -35,6 +38,7 @@ def convex_hull(p):
 
 
 def convex_hull_step_by_step(p):
+    assert len(p) > 0
     result = []
     ch = []
 
@@ -66,6 +70,7 @@ def convex_hull_step_by_step(p):
 
 
 def jarvis(p):
+    assert len(p) > 0
     s0 = point_min(p)
     ch = []
     ch.append(s0)
@@ -106,6 +111,9 @@ def jarvis(p):
     return ch
 
 def far_point(p1, p2, set):
+    assert len(p1) == 2
+    assert len(p2) == 2
+    assert len(set) > 0
     """
     p1, p2 - line 
     set - points
@@ -122,6 +130,7 @@ def far_point(p1, p2, set):
 
 
 def quick_hull(p):
+    assert len(p) > 0
     s_l = []
     s_r = []
     ch = []
@@ -141,6 +150,10 @@ def quick_hull(p):
 
 
 def iter_hull(points, left, right, ch):
+    assert len(points) > 0
+    assert len(left) == 2
+    assert len(right) == 2
+    assert len(ch) > 0
     sl = []
     
     for x in points:
@@ -154,4 +167,58 @@ def iter_hull(points, left, right, ch):
         iter_hull(sl, lrp, right, ch)
 
 
-
+def dynamic_convex_hull(p, ch):
+    if len(p) == 0:
+        new_ch = []
+    elif len(p) == 1:
+        new_ch = p
+    elif len(p) == 2:
+        if p[0] == p[1]:
+            new_ch = p[0]
+        else:
+            new_ch = p
+    elif len(p) == 3:
+        if (p[2] == p[0] or p[2] == [1]) and p[0] != p[1]:
+            new_ch = [p[0], p[1]]
+        if p[0] == p[1] and p[0] == p[2]:
+            new_ch = p[0]
+        if det(p[0].get_point(), p[1].get_point(), p[2].get_point()) == 0:
+            if scalar_prod(p[0].get_point(), p[1].get_point()) * scalar_prod(p[0].get_point(), p[2].get_point()) < 0:
+                if p[1][0] < p[2][0]:
+                    new_ch = [p[1], p[2]]
+                else:
+                    new_ch = [p[2], p[1]]
+            elif scalar_prod(p[1].get_point(), p[2].get_point()) * scalar_prod(p[1].get_point(), p[0].get_point()) < 0:
+                if p[0][0] < p[2][0]:
+                    new_ch = [p[0], p[2]]
+                else:
+                    new_ch = [p[2], p[0]]
+            elif scalar_prod(p[2].get_point(), p[0].get_point()) * scalar_prod(p[2].get_point(), p[1].get_point()) < 0:
+                if p[0][0] < p[1][0]:
+                    new_ch = [p[0], p[1]]
+                else:
+                    new_ch = [p[1], p[0]]
+        else:
+            if pR.is_left(p[0].get_point(), p[1].get_point(), p[2].get_point()):
+                new_ch = [p[0], p[1], p[2]]
+            else:
+                new_ch = [p[0], p[2], p[1]]
+    else:
+        k = []
+        point = p[-1].__copy__()
+        for i in range(len(ch)):
+            if pR.is_right(ch[i - 1].get_point(), ch[i].get_point(),
+                    point.get_point()):
+                if ch[i - 1] not in k:
+                    k.append(ch[i - 1])
+                if ch[i] not in k:
+                    k.append(ch[i])
+        if len(k) == 0:
+            new_ch = ch
+        else:
+            index = ch.index(k[0])
+            k.remove(k[0])
+            k.remove(k[-1])
+            new_ch = [item for item in ch if item not in k]
+            new_ch.insert(index + 1, point)
+    return new_ch

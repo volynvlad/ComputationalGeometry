@@ -8,6 +8,7 @@ from ConvexHull import *
 from diameter import slow_diameter
 from diameter import fast_diameter
 from MathHelper import perimeter
+from ConvexHull import dynamic_convex_hull
 
 pygame.font.init()
 size = [800, 800]
@@ -279,7 +280,7 @@ def draw_lab6(p):
                 run = False
 
         window.fill(WHITE)
-        clock.tick(10)
+        clock.tick(30)
 
         for i in range(len(points_move)):
             points_move[i].move(size)
@@ -301,4 +302,44 @@ def draw_lab6(p):
         pygame.display.flip()
 
     pygame.quit()
+
+def draw_lab7():
+
+    p = []
+    ch = []
+    pygame.display.set_caption('Cartoon')
+    window = pygame.display.set_mode(size)
+    clock = pygame.time.Clock()
+
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+                point = Point.Point(pos[0], pos[1], 0, 0)
+                point = point.__copy__()
+                p.append(point)
+
+        window.fill(WHITE)
+        clock.tick(30)
+
+        ch = dynamic_convex_hull(p, ch)
+        if ch != []:
+            for i in range(len(ch)):
+                draw_arrow(window, RED, [ch[i - 1].get_point()[0], ch[i -
+                    1].get_point()[1]],
+                        [ch[i].get_point()[0], ch[i].get_point()[1]], width = 3,
+                        coord=True)
+
+        for x in p:
+            x.draw(window, BLACK)
+            x.move(size)
+
+        pygame.display.flip()
+
+    pygame.quit()
+
 

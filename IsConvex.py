@@ -2,6 +2,7 @@ import PointRelative as pR
 
 
 def is_convex(p):
+    assert len(p) > 2
     """
     p - polygon | the list of points
     :param p:

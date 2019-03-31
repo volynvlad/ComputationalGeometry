@@ -142,6 +142,10 @@ def main_lab6():
     p = [[random.randint(100, 700), random.randint(100, 700)] for _ in range(leng)]
     draw_lab6(p)
 
+
+def main_lab7():
+    draw_lab7()
+
 if __name__ == "__main__":
     print("-------")
     print("|1 lab|")
@@ -150,6 +154,7 @@ if __name__ == "__main__":
     print("|4 lab|")
     print("|5 lab|")
     print("|6 lab|")
+    print("|7 lab|")
     print("-------")
     print("Choose something.(q - quit)")
     x = input()
@@ -166,3 +171,5 @@ if __name__ == "__main__":
         main_lab5()
     elif x == '6':
         main_lab6()
+    elif x == '7':
+        main_lab7()

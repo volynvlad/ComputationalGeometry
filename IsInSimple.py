@@ -9,6 +9,8 @@ import LinesRelative as lr
 
 
 def gaborit_test(p, p0):
+    assert len(p) > 2
+    assert len(p0) == 2
     """
     :param p:
     :param p0:
@@ -25,6 +27,8 @@ def gaborit_test(p, p0):
 
 
 def ray_test(p, p0):
+    assert len(p) > 2
+    assert len(p0) == 2
     """
     :param p: polygon
     :param p0: point
@@ -58,6 +62,8 @@ def ray_test(p, p0):
 
 
 def angle_test(p, p0):
+    assert len(p) > 2
+    assert len(p0) == 2
     """
     :param p:
     :param p0:
@@ -82,6 +88,8 @@ def angle_test(p, p0):
 
 
 def octano_test(p, p0):
+    assert len(p) > 2
+    assert len(p0) == 2
     """
     :param p:
     :param p0:

@@ -6,11 +6,19 @@ from MathHelper import scalar
 from diameter import slow_diameter
 
 class Point:
-    def __init__(self, x, y, v_x, v_y):
+    def __init__(self, x, y, v_x = 0, v_y = 0):
+        print("init (%d, %d)" % (x, y))
         self.x = x
         self.y = y
         self.v_x = v_x
         self.v_y = v_y
+
+
+    def __copy__(self):
+        cls = self.__class__
+        new = cls.__new__(cls)
+        new.__dict__.update(self.__dict__)
+        return new
 
     def move(self, size):
         assert len(size) == 2

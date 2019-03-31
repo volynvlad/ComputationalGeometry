@@ -3,6 +3,8 @@ import LinesRelative as lR
 
 
 def convex_point_relative(p, p0):
+    assert len(p) > 2
+    assert len(p0) == 2
     """
     :param p: polygon
     :param p0: point
