@@ -23,6 +23,7 @@ def draw_lines(p, color, screen):
 
 
 def draw_arrow(screen, colour, start, end, coord=False, arrow=False, width=2):
+    rot_num = 100
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     dist = 40
     pygame.draw.line(screen, colour, start, end, width)
@@ -31,10 +32,14 @@ def draw_arrow(screen, colour, start, end, coord=False, arrow=False, width=2):
         pygame.draw.polygon(screen, colour,
                             ((end[0] + 12 * math.sin(math.radians(rotation)),
                              end[1] + 12 * math.cos(math.radians(rotation))),
-                             (end[0] + 12 * math.sin(math.radians(rotation - 120)),
-                              end[1] + 12 * math.cos(math.radians(rotation - 120))),
-                             (end[0] + 12 * math.sin(math.radians(rotation + 120)),
-                             end[1] + 12 * math.cos(math.radians(rotation + 120)))))
+                             (end[0] + 12 * math.sin(math.radians(rotation -
+                                 rot_num)),
+                              end[1] + 12 * math.cos(math.radians(rotation -
+                                  rot_num))),
+                             (end[0] + 12 * math.sin(math.radians(rotation +
+                                 rot_num)),
+                             end[1] + 12 * math.cos(math.radians(rotation +
+                                 rot_num)))))
     text_start = my_font.render("(%d, %d)" % (start[0], start[1]), False, BLACK)
     text_end = my_font.render("(%d, %d)" % (end[0], end[1]), False, BLACK)
     if coord:
@@ -248,8 +253,8 @@ def draw_lab5(p):
 
         i1, i2 = slow_diameter(p)
         draw_arrow(window, GREEN, p[i1], p[i2], width = 4)
-        i3, i4 = fast_diameter(ch)
-        draw_arrow(window, BLUE, ch[i3], ch[i4], width = 4)
+        #i3, i4 = fast_diameter(ch)
+        #raw_arrow(window, BLUE, ch[i3], ch[i4], width = 4)
 
         points_move[i1].set_speed(-points_move[i1].v_x, -points_move[i1].v_y)
         points_move[i2].set_speed(-points_move[i2].v_x, -points_move[i2].v_y)
@@ -304,7 +309,6 @@ def draw_lab6(p):
     pygame.quit()
 
 def draw_lab7():
-
     p = []
     ch = []
     pygame.display.set_caption('Cartoon')
@@ -322,21 +326,21 @@ def draw_lab7():
                 point = Point.Point(pos[0], pos[1], 0, 0)
                 point = point.__copy__()
                 p.append(point)
+                ch = dynamic_convex_hull(p, ch)
 
         window.fill(WHITE)
         clock.tick(30)
 
-        ch = dynamic_convex_hull(p, ch)
         if ch != []:
             for i in range(len(ch)):
                 draw_arrow(window, RED, [ch[i - 1].get_point()[0], ch[i -
                     1].get_point()[1]],
-                        [ch[i].get_point()[0], ch[i].get_point()[1]], width = 3,
-                        coord=True)
-
-        for x in p:
-            x.draw(window, BLACK)
-            x.move(size)
+                        [ch[i].get_point()[0], ch[i].get_point()[1]], width = 3)
+        for i in range(len(p)):
+            p[i].draw(window, BLACK)
+            p[i].move(size)
+        if ch != []:
+            ch[0].draw(window, GREEN)
 
         pygame.display.flip()
 

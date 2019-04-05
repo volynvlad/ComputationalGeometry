@@ -115,7 +115,7 @@ def far_point(p1, p2, set):
     assert len(p2) == 2
     assert len(set) > 0
     """
-    p1, p2 - line 
+    p1, p2 - line
     set - points
     return
         most far point in set from p1 p2
@@ -155,7 +155,7 @@ def iter_hull(points, left, right, ch):
     assert len(right) == 2
     assert len(ch) > 0
     sl = []
-    
+
     for x in points:
         if pR.is_left(left, right, x):
             sl.append(x)
@@ -169,56 +169,62 @@ def iter_hull(points, left, right, ch):
 
 def dynamic_convex_hull(p, ch):
     if len(p) == 0:
-        new_ch = []
+        return []
     elif len(p) == 1:
-        new_ch = p
+        return p
     elif len(p) == 2:
         if p[0] == p[1]:
-            new_ch = p[0]
+            return p[0]
         else:
-            new_ch = p
+            return p
     elif len(p) == 3:
         if (p[2] == p[0] or p[2] == [1]) and p[0] != p[1]:
-            new_ch = [p[0], p[1]]
+            return [p[0], p[1]]
         if p[0] == p[1] and p[0] == p[2]:
-            new_ch = p[0]
+            return p[0]
         if det(p[0].get_point(), p[1].get_point(), p[2].get_point()) == 0:
             if scalar_prod(p[0].get_point(), p[1].get_point()) * scalar_prod(p[0].get_point(), p[2].get_point()) < 0:
-                if p[1][0] < p[2][0]:
-                    new_ch = [p[1], p[2]]
-                else:
-                    new_ch = [p[2], p[1]]
+                return [p[1], p[2]]
             elif scalar_prod(p[1].get_point(), p[2].get_point()) * scalar_prod(p[1].get_point(), p[0].get_point()) < 0:
-                if p[0][0] < p[2][0]:
-                    new_ch = [p[0], p[2]]
-                else:
-                    new_ch = [p[2], p[0]]
+                return [p[0], p[2]]
             elif scalar_prod(p[2].get_point(), p[0].get_point()) * scalar_prod(p[2].get_point(), p[1].get_point()) < 0:
-                if p[0][0] < p[1][0]:
-                    new_ch = [p[0], p[1]]
-                else:
-                    new_ch = [p[1], p[0]]
+                return [p[0], p[1]]
         else:
             if pR.is_left(p[0].get_point(), p[1].get_point(), p[2].get_point()):
-                new_ch = [p[0], p[1], p[2]]
+                return [p[0], p[1], p[2]]
             else:
-                new_ch = [p[0], p[2], p[1]]
+                return [p[0], p[2], p[1]]
     else:
+        flag1 = False
+        flag2 = False
+
         k = []
-        point = p[-1].__copy__()
-        for i in range(len(ch)):
-            if pR.is_right(ch[i - 1].get_point(), ch[i].get_point(),
-                    point.get_point()):
-                if ch[i - 1] not in k:
-                    k.append(ch[i - 1])
+        n = len(ch)
+        ch.append(ch[0])
+        i = 0
+        while i < n:
+            if pR.is_right(ch[i].get_point(), ch[i + 1].get_point(),
+                    p[-1].get_point()):
                 if ch[i] not in k:
                     k.append(ch[i])
+                if ch[i + 1] not in k:
+                    k.append(ch[i + 1])
+                if i == 0:
+                    flag1 = True
+                if i == n - 1:
+                    flag2 = True
+            i = i + 1
+
+        del ch[-1]
         if len(k) == 0:
-            new_ch = ch
+            return ch
         else:
+            if flag1 and flag2:
+                k_tmp = k.pop()
+                k.insert(0, k_tmp)
             index = ch.index(k[0])
             del k[0]
             del k[-1]
             new_ch = [item for item in ch if item not in k]
-            new_ch.insert(index + 1, point)
-    return new_ch
+            new_ch.insert(index + 1, p[-1])
+            return new_ch
