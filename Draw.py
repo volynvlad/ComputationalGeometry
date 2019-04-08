@@ -253,8 +253,8 @@ def draw_lab5(p):
 
         i1, i2 = slow_diameter(p)
         draw_arrow(window, GREEN, p[i1], p[i2], width = 4)
-        #i3, i4 = fast_diameter(ch)
-        #raw_arrow(window, BLUE, ch[i3], ch[i4], width = 4)
+        i3, i4 = fast_diameter(ch)
+        draw_arrow(window, BLUE, ch[i3], ch[i4], width = 4)
 
         points_move[i1].set_speed(-points_move[i1].v_x, -points_move[i1].v_y)
         points_move[i2].set_speed(-points_move[i2].v_x, -points_move[i2].v_y)
@@ -339,11 +339,30 @@ def draw_lab7():
         for i in range(len(p)):
             p[i].draw(window, BLACK)
             p[i].move(size)
-        if ch != []:
-            ch[0].draw(window, GREEN)
 
         pygame.display.flip()
 
     pygame.quit()
 
+def draw_lab8(p, a, b):
+    pygame.display.set_caption('Cartoon')
+    window = pygame.display.set_mode(size)
+    clock = pygame.time.Clock()
+
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        window.fill(WHITE)
+        clock.tick(30)
+
+        for i in range(len(p)):
+            draw_arrow(window, BLACK, p[i - 1], p[i], width=3)
+        draw_arrow(window, RED, a, b, arrow=True)
+
+        pygame.display.flip()
+
+    pygame.quit()
 

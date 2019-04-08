@@ -146,6 +146,12 @@ def main_lab6():
 def main_lab7():
     draw_lab7()
 
+def main_lab8():
+    p = [[100, 400], [400, 700], [700, 400], [400, 400]]
+    a = [[random.randint(100, 700), random.randint(100, 700)]]
+    b = [[random.randint(100, 700), random.randint(100, 700)]]
+
+    draw_lab8(p, a, b)
 if __name__ == "__main__":
     print("-------")
     print("|1 lab|")
@@ -155,6 +161,7 @@ if __name__ == "__main__":
     print("|5 lab|")
     print("|6 lab|")
     print("|7 lab|")
+    print("|8 lab|")
     print("-------")
     print("Choose something.(q - quit)")
     x = input()
@@ -173,3 +180,5 @@ if __name__ == "__main__":
         main_lab6()
     elif x == '7':
         main_lab7()
+    elif x == '8':
+        main_lab8()

@@ -25,6 +25,7 @@ def slow_diameter(p):
 
 def fast_diameter(ch):
     assert len(ch) > 0
+    result = []
     """
     ch - convex hull
     return:
@@ -39,9 +40,8 @@ def fast_diameter(ch):
     while triangle_square(ch[k - 1], ch[0], ch[i + 1]) > triangle_square(ch[k - 1], ch[0], ch[i]):
         i = i + 1
     start = i
-    print("start = %d" % start)
     j = 0
-    while  temp < k:
+    while temp < k:
         temp = start
         while triangle_square(ch[j], ch[j + 1] , ch[temp + 1]) >= triangle_square(ch[j], ch[j + 1], ch[temp]):
            temp = temp + 1
@@ -51,8 +51,10 @@ def fast_diameter(ch):
         for a in range(start, end + 1):
             if length(ch[a], ch[j]) > max:
                 max = length(ch[a], ch[j])
-                start = end
-                j = j + 1
-    print("result - (%d, %d)" % (start, j))
-    return start, j
+
+                result = a, j
+        j = j + 1
+        start = end
+    print("result - (%d, %d)" % (result[0], result[1]))
+    return result
 

@@ -1,6 +1,5 @@
 import math
 
-
 def determinant(p1, p2, p):
     assert len(p1) == 2
     assert len(p2) == 2
@@ -129,16 +128,19 @@ def cos_num(p1, p2):
     assert len(p2) == 2
     return (p2[0] - p1[0]) / length(p1, p2)
 
+
 def cos_num_abs(p1, p2):
     assert len(p1) == 2
     assert len(p2) == 2
 
     return math.fabs(p2[0] - p1[0]) / length(p1, p2)
 
+
 def scalar(p1, p2):
     assert len(p1) == 2
     assert len(p2) == 2
     return p1[0] * p2[0] + p1[1] * p2[1]
+
 
 def triangle_square(p1, p2, p3):
     assert len(p1) == 2
@@ -146,11 +148,13 @@ def triangle_square(p1, p2, p3):
     assert len(p3) == 2
     return abs(determinant(p1, p2, p3)) / 2
 
+
 def perimeter(p):
     sum = 0
     for i in range(len(p)):
         sum = sum + length(p[i - 1], p[i])
     return sum
+
 
 def distance(p1, p2, p):
     assert len(p1) == 2
@@ -165,3 +169,84 @@ def distance(p1, p2, p):
 def scalar_prod(p1, p2):
     return p1[0] * p2[0] + p1[1] * p2[1]
 
+
+def gcd(a, b):
+    assert a > 0
+    assert b > 0
+    while b:
+        a, b = b, a % b
+    return a
+
+
+def mcd(a, b):
+    assert a > 0
+    assert b > 0
+    return (a / gcd(a, b)) * b
+
+
+def get_intersaction_point(line1, line2):
+    assert len(line1) == 2
+    assert len(line2) == 2
+    assert len(line1[0]) == 2
+    assert len(line1[1]) == 2
+    assert len(line2[0]) == 2
+    assert len(line2[1]) == 2
+
+    x = []
+    y = []
+
+    A1 = line1[1][1] - line1[0][1]
+    B1 = line1[0][0] - line1[1][0]
+    C1 = -line1[0][0] * line1[1][1] + line1[0][1] * line1[1][0]
+    A2 = line2[1][1] - line2[0][1]
+    B2 = line2[0][0] - line2[1][0]
+    C2 = -line2[0][0] * line2[1][1] + line2[0][1] * line2[1][0]
+    if A1 == 0:
+        y = line1[0][1]
+    if A2 == 0:
+        y = line2[0][1]
+    if B1 == 0:
+        x = line1[0][0]
+    if B2 == 0:
+        x = line2[0][0]
+    if x != [] and y != []: # lines - (horizontal and vertical)
+        return x, y
+    else:
+        if x != []: # one line horizontal
+            if B1 == 0:
+                return x, -(C2 + A2 * x) / B2
+            else:
+                return x, -(C1 + A1 * x) / B1
+        elif y != []: # one line vertical
+            if A1 == 0:
+                return -(B2 * y + C2) / A2, y
+            else:
+                return -(B1 * y + C1) / A1, y
+        else: # 2 lines neither vertical not horizontal
+            if A1 < 0:
+                A1 = -A1
+                B1 = -B1
+                C1 = -C1
+            if A2 < 0:
+                A2 = -A2
+                B2 = -B2
+                C2 = -C2
+            A = mcd(A1, A2)
+            B1 = B1 * A / A1
+            C1 = C1 * A / A1
+            A1 = A
+            B2 = B2 * A / A2
+            C2 = C2 * A / A2
+            A2 = A
+
+            y = -(C1 - C2) / (B1 - B2)
+            x = -(B1 * y + C1) / A1
+            return x, y
+
+
+def param_t_for_line(start, current, end):
+    assert len(start) == 2
+    assert len(current) == 2
+    assert len(end) == 2
+
+    return length(start, current) / length(start, end)
