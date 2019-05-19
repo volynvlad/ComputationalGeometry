@@ -1,5 +1,19 @@
 import math
 
+def min2(a, b):
+    if a < b:
+        return a
+    else:
+        return b
+
+
+def max2(a, b):
+    if a > b:
+        return a
+    else:
+        return b
+
+
 def determinant(p1, p2, p):
     assert len(p1) == 2
     assert len(p2) == 2
@@ -244,9 +258,45 @@ def get_intersaction_point(line1, line2):
             return x, y
 
 
-def param_t_for_line(start, current, end):
+def param_t_for_line(start, point, end):
     assert len(start) == 2
-    assert len(current) == 2
+    assert len(point) == 2
     assert len(end) == 2
+    assert not start == end
+    return length(start, point) / length(start, end)
 
-    return length(start, current) / length(start, end)
+def point_from_param_t(a, b, t):
+    assert len(a) == 2
+    assert len(b) == 2
+    return [a[0] * (1 - t) + b[0] * t, a[1] * (1 - t) + b[1] * t]
+
+def sorted_by_x(points):
+    """
+    get points
+    return:
+        sorted points by x
+    """
+    #assert points[0] == 2
+    for i in range(len(points)):
+        for j in range(len(points)):
+            if points[i][0] > points[j][0]:
+                points[i], points[j] = points[j], points[i]
+
+    return points
+
+
+def sorted_by_y(points):
+    """
+    get points
+    return:
+        sorted points by y
+    """
+    #assert points[0] == 2
+    for i in range(len(points)):
+        for j in range(len(points)):
+            if points[i][1] > points[j][1]:
+                points[i], points[j] = points[j], points[i]
+
+    return points
+
+

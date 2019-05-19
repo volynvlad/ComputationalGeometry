@@ -28,7 +28,6 @@ def generation_convex_polygon(minimum, maximum):
     """
     x = random.randint(6, 7)  # number of points in polygon
     p = []
-    print("number of points: %d" % x)
     run = True
     iteration = 0
     while run:

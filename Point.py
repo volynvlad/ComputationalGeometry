@@ -7,7 +7,7 @@ from diameter import slow_diameter
 
 class Point:
     def __init__(self, x, y, v_x = 0, v_y = 0):
-        print("init (%d, %d)" % (x, y))
+        #print("init (%d, %d)" % (x, y))
         self.x = x
         self.y = y
         self.v_x = v_x

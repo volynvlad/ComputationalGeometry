@@ -9,7 +9,7 @@ from IsConvex import is_convex
 from IsInSimple import *
 from ConvexHull import convex_hull
 from ConvexHull import jarvis
-
+import sys
 
 def main_lab1():
     run = True
@@ -132,39 +132,51 @@ def main_lab4():
 
 
 def main_lab5():
-    leng = 10
+    leng = 100
     p = [[random.randint(100, 700), random.randint(100, 700)] for _ in range(leng)]
     draw_lab5(p)
 
 
 def main_lab6():
-    leng = 100
-    p = [[random.randint(100, 700), random.randint(100, 700)] for _ in range(leng)]
+    length = 100
+    p = [[random.randint(100, 700), random.randint(100, 700)] for _ in\
+            range(length)]
     draw_lab6(p)
 
 
 def main_lab7():
     draw_lab7()
 
-def main_lab8():
-    p = [[100, 400], [400, 700], [700, 400], [400, 400]]
-    a = [[random.randint(100, 700), random.randint(100, 700)]]
-    b = [[random.randint(100, 700), random.randint(100, 700)]]
 
-    draw_lab8(p, a, b)
+def main_lab8():
+    num = 1
+    p = [[600, 600], [200, 600], [200, 200], [600, 200]]
+
+    lines = [[[random.randint(100, 700), random.randint(100, 700)], [random.randint(100, 700), random.randint(100, 700)]] for _ in range(num)]
+
+    draw_lab8(p, lines)
+
+def main_lab9():
+    pass
+
+def main_lab10():
+    leng = 40
+    p = []
+    i = 0
+    while i < 20:
+        p.append([random.randint(100, 700), random.randint(100, 700)])
+        i = i + 1
+    draw_lab10(p)
+
+def main_lab11():
+    num = 40
+    points = [[[random.randint(100, 700), random.randint(100, 700)], [random.randint(100, 700), random.randint(100, 700)]] for _ in range(num)]
+
+    draw_lab11(points)
+
 if __name__ == "__main__":
-    print("-------")
-    print("|1 lab|")
-    print("|2 lab|")
-    print("|3 lab|")
-    print("|4 lab|")
-    print("|5 lab|")
-    print("|6 lab|")
-    print("|7 lab|")
-    print("|8 lab|")
-    print("-------")
-    print("Choose something.(q - quit)")
-    x = input()
+    x = sys.argv[1]
+    print("lab - ", x)
 
     if x == '1':
         main_lab1()
@@ -182,3 +194,9 @@ if __name__ == "__main__":
         main_lab7()
     elif x == '8':
         main_lab8()
+    elif x == '9':
+        main_lab9()
+    elif x == '10':
+        main_lab10()
+    elif x == '11':
+        main_lab11()

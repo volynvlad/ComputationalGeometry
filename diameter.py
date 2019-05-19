@@ -51,10 +51,8 @@ def fast_diameter(ch):
         for a in range(start, end + 1):
             if length(ch[a], ch[j]) > max:
                 max = length(ch[a], ch[j])
-
                 result = a, j
         j = j + 1
         start = end
-    print("result - (%d, %d)" % (result[0], result[1]))
     return result
 

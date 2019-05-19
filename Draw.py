@@ -9,6 +9,8 @@ from diameter import slow_diameter
 from diameter import fast_diameter
 from MathHelper import perimeter
 from ConvexHull import dynamic_convex_hull
+from mutual_arrangement_segment_polygon import cyrus_beck
+from min_distance import findNearestPairOfPoints
 
 pygame.font.init()
 size = [800, 800]
@@ -238,7 +240,7 @@ def draw_lab5(p):
                 run = False
 
         window.fill(WHITE)
-        clock.tick(10)
+        clock.tick(60)
         ch = jarvis(p)
         for i in range(len(points_move)):
             points_move[i].draw(window, BLACK)
@@ -344,10 +346,16 @@ def draw_lab7():
 
     pygame.quit()
 
-def draw_lab8(p, a, b):
+def draw_lab8(p, lines):
     pygame.display.set_caption('Cartoon')
     window = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
+
+    cuted_lines = []
+    for line in lines:
+        cuted_line = cyrus_beck(p, line)
+        if cuted_line != []:
+            cuted_lines.append(cuted_line)
 
     run = True
     while run:
@@ -360,9 +368,64 @@ def draw_lab8(p, a, b):
 
         for i in range(len(p)):
             draw_arrow(window, BLACK, p[i - 1], p[i], width=3)
-        draw_arrow(window, RED, a, b, arrow=True)
+        for line in lines:
+            draw_arrow(window, RED, line[0], line[1])
+        for cuted_line in cuted_lines:
+            draw_arrow(window, BLUE, cuted_line[0], cuted_line[1])
 
         pygame.display.flip()
 
     pygame.quit()
 
+def draw_lab9():
+    pass
+
+def draw_lab10(p):
+    points_move = []
+    pygame.display.set_caption('Cartoon')
+    window = pygame.display.set_mode(size)
+    clock = pygame.time.Clock()
+
+    for i in p:
+        points_move.append(Point.Point(i[0], i[1], 0, 0))
+    result = []
+    print(findNearestPairOfPoints(p,result))
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        window.fill(WHITE)
+        clock.tick(30)
+
+        draw_arrow(window, BLACK, result[0], result[1], width=3)
+
+        for i in range(len(points_move)):
+            points_move[i].draw(window, BLACK)
+
+        pygame.display.flip()
+
+    pygame.quit()
+
+def draw_lab11(points):
+
+    pygame.display.set_caption('Cartoon')
+    window = pygame.display.set_mode(size)
+    clock = pygame.time.Clock()
+
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        window.fill(WHITE)
+
+        clock.tick(30)
+
+
+
+        pygame.display.flip()
+
+    pygame.quit()

@@ -9,10 +9,11 @@ def is_convex(p):
     :return: True if p is simple
              False if not
     """
+    n = len(p)
     p = p.copy()
     p.append(p[0])
     p.append(p[1])
-    for i in range(len(p)):
+    for i in range(n):
         flag = pR.point_relative(p[i], p[i + 1], p[i + 2])
         for x in p:
             if x != p[i] and x != p[i + 1]:
