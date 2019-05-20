@@ -27,20 +27,20 @@ def recurtion(X, Y, result_points):
     sep = len(X) // 2
     Psep = X[sep]
     XL = X[0 : sep]
-    XR = X[sep + 1 : len(X)]
+    XR = X[sep : len(X)]
     YL = []
     YR = []
-    for i in range(len(X)):
-        if X[i][0] > Psep[0]:
-            YR.append(X[i])
-        if X[i][0] < Psep[0]:
-            YL.append(X[i])
+    for i in range(len(Y)):
+        if Y[i][0] > Psep[0]:
+            YR.append(Y[i])
+        if Y[i][0] < Psep[0]:
+            YL.append(Y[i])
     dl = recurtion(XL, YL, result_points)
     dr = recurtion(XR, YR, result_points)
     d = min2(dl, dr)
     Ydel = []
     for i in range(len(Y)):
-        if Y[i][0] - Psep[0] < d:
+        if abs(Y[i][0] - Psep[0]) < d:
             Ydel.append(Y[i])
     for i in range(len(Ydel)):
         j = i

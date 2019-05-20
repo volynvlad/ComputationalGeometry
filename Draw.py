@@ -310,75 +310,75 @@ def draw_lab6(p):
 
     pygame.quit()
 
-def draw_lab7():
-    p = []
-    ch = []
-    pygame.display.set_caption('Cartoon')
-    window = pygame.display.set_mode(size)
-    clock = pygame.time.Clock()
+    def draw_lab7():
+        p = []
+        ch = []
+        pygame.display.set_caption('Cartoon')
+        window = pygame.display.set_mode(size)
+        clock = pygame.time.Clock()
 
-    run = True
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
 
-            if event.type == pygame.MOUSEBUTTONUP:
-                pos = pygame.mouse.get_pos()
-                point = Point.Point(pos[0], pos[1], 0, 0)
-                point = point.__copy__()
-                p.append(point)
-                ch = dynamic_convex_hull(p, ch)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+                    point = Point.Point(pos[0], pos[1], 0, 0)
+                    point = point.__copy__()
+                    p.append(point)
+                    ch = dynamic_convex_hull(p, ch)
 
-        window.fill(WHITE)
-        clock.tick(30)
+            window.fill(WHITE)
+            clock.tick(30)
 
-        if ch != []:
-            for i in range(len(ch)):
-                draw_arrow(window, RED, [ch[i - 1].get_point()[0], ch[i -
-                    1].get_point()[1]],
-                        [ch[i].get_point()[0], ch[i].get_point()[1]], width = 3)
-        for i in range(len(p)):
-            p[i].draw(window, BLACK)
-            p[i].move(size)
+            if ch != []:
+                for i in range(len(ch)):
+                    draw_arrow(window, RED, [ch[i - 1].get_point()[0], ch[i -
+                        1].get_point()[1]],
+                            [ch[i].get_point()[0], ch[i].get_point()[1]], width = 3)
+            for i in range(len(p)):
+                p[i].draw(window, BLACK)
+                p[i].move(size)
 
-        pygame.display.flip()
+            pygame.display.flip()
 
-    pygame.quit()
+        pygame.quit()
 
-def draw_lab8(p, lines):
-    pygame.display.set_caption('Cartoon')
-    window = pygame.display.set_mode(size)
-    clock = pygame.time.Clock()
+    def draw_lab8(p, lines):
+        pygame.display.set_caption('Cartoon')
+        window = pygame.display.set_mode(size)
+        clock = pygame.time.Clock()
 
-    cuted_lines = []
-    for line in lines:
-        cuted_line = cyrus_beck(p, line)
-        if cuted_line != []:
-            cuted_lines.append(cuted_line)
-
-    run = True
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-
-        window.fill(WHITE)
-        clock.tick(30)
-
-        for i in range(len(p)):
-            draw_arrow(window, BLACK, p[i - 1], p[i], width=3)
+        cuted_lines = []
         for line in lines:
-            draw_arrow(window, RED, line[0], line[1])
-        for cuted_line in cuted_lines:
-            draw_arrow(window, BLUE, cuted_line[0], cuted_line[1])
+            cuted_line = cyrus_beck(p, line)
+            if cuted_line != []:
+                cuted_lines.append(cuted_line)
 
-        pygame.display.flip()
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
 
-    pygame.quit()
+            window.fill(WHITE)
+            clock.tick(30)
 
-def draw_lab9():
-    pass
+            for i in range(len(p)):
+                draw_arrow(window, BLACK, p[i - 1], p[i], width=3)
+            for line in lines:
+                draw_arrow(window, RED, line[0], line[1])
+            for cuted_line in cuted_lines:
+                draw_arrow(window, BLUE, cuted_line[0], cuted_line[1])
+
+            pygame.display.flip()
+
+        pygame.quit()
+
+    def draw_lab9():
+        pass
 
 def draw_lab10(p):
     points_move = []
@@ -408,24 +408,37 @@ def draw_lab10(p):
 
     pygame.quit()
 
-def draw_lab11(points):
+    def draw_lab11(points):
 
-    pygame.display.set_caption('Cartoon')
-    window = pygame.display.set_mode(size)
-    clock = pygame.time.Clock()
+        pygame.display.set_caption('Cartoon')
+        window = pygame.display.set_mode(size)
+        clock = pygame.time.Clock()
 
-    run = True
-    while run:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
+        run = True
+        while run:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                     run = False
 
-        window.fill(WHITE)
+                if event.type == pygame.MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+                    point = Point.Point(pos[0], pos[1], 0, 0)
+                    point = point.__copy__()
+                    ch = dynamic_convex_hull(p, ch)
 
-        clock.tick(30)
+            window.fill(WHITE)
+            clock.tick(30)
 
+            if ch != []:
+                for i in range(len(ch)):
+                    draw_arrow(window, RED, [ch[i - 1].get_point()[0], ch[i -
+                        1].get_point()[1]],
+                            [ch[i].get_point()[0], ch[i].get_point()[1]], width = 3)
+            for i in range(len(p)):
+                p[i].draw(window, BLACK)
+                p[i].move(size)
 
+            pygame.display.flip()
 
-        pygame.display.flip()
-
-    pygame.quit()
+        pygame.quit()
+ 

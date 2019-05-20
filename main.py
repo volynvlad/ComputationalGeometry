@@ -169,10 +169,7 @@ def main_lab10():
     draw_lab10(p)
 
 def main_lab11():
-    num = 40
-    points = [[[random.randint(100, 700), random.randint(100, 700)], [random.randint(100, 700), random.randint(100, 700)]] for _ in range(num)]
-
-    draw_lab11(points)
+    draw_lab11()
 
 if __name__ == "__main__":
     x = sys.argv[1]

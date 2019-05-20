@@ -300,3 +300,48 @@ def sorted_by_y(points):
     return points
 
 
+def is_delonay_condition(p1, p2, p3, p4):
+    """
+    p1, p2, p3 - triangle
+    p2, p3, p4 - triangle
+    p2, p3 - same side of the triangles
+    """
+    cA = ((p2[0] - p1[0]) * (p3[0] - p1[0]) +
+                 (p2[1] - p1[1]) * (p3[1] - p1[1])) 
+    cB = ((p2[0] - p4[0]) * (p3[0] - p4[0]) +
+                 (p2[1] - p4[1]) * (p3[1] - p4[1])) 
+    if cA >= 0 and cB >= 0:
+        return True
+    elif cA < 0 and cB < 0:
+        return False
+    else:
+        return (
+                abs((p2[0] - p1[0]) * (p3[1] - p1[1]) - 
+                    (p3[0] - p1[0]) * (p2[1] - p1[1])) * cB 
+                    +
+                abs((p2[0] - p4[0]) * (p3[1] - p4[1]) - 
+                    (p3[0] - p4[0]) * (p2[1] - p4[1])) * cA            
+                ) >= 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
