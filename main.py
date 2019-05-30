@@ -9,6 +9,7 @@ from IsConvex import is_convex
 from IsInSimple import *
 from ConvexHull import convex_hull
 from ConvexHull import jarvis
+from Generate import generation_convex_polygon
 import sys
 
 def main_lab1():
@@ -68,8 +69,8 @@ def main_lab1():
 
 
 def main_lab2():
-    p = Generate.generation_simple_polygon(100, 700)
-    p0 = Generate.generate_random_point(100, 700)
+    #p = Generate.generation_simple_polygon(100, 700)
+    #p0 = Generate.generate_random_point(100, 700)
     #  first test
     #############
     #  p = [[200, 400], [400, 200], [600, 400], [400, 600]]
@@ -78,6 +79,8 @@ def main_lab2():
     ##############
     #  p = [[100, 200], [200, 200], [400, 100], [300, 400]]
     #  p0 = [300, 200]
+    p = [[100, 500], [500, 100], [500, 500]]
+    p0 = [300, 300]
 
     q = gaborit_test(p, p0) - 1, p0[1]
 
@@ -149,7 +152,7 @@ def main_lab7():
 
 
 def main_lab8():
-    num = 1
+    num = 10
     p = [[600, 600], [200, 600], [200, 200], [600, 200]]
 
     lines = [[[random.randint(100, 700), random.randint(100, 700)], [random.randint(100, 700), random.randint(100, 700)]] for _ in range(num)]
@@ -157,7 +160,11 @@ def main_lab8():
     draw_lab8(p, lines)
 
 def main_lab9():
-    pass
+
+    p = generation_convex_polygon(100, 300, 300, 500, 5, 6)
+    q = generation_convex_polygon(500, 300, 700, 500, 5, 6)
+
+    draw_lab9(p, q)
 
 def main_lab10():
     leng = 40

@@ -268,7 +268,7 @@ def param_t_for_line(start, point, end):
 def point_from_param_t(a, b, t):
     assert len(a) == 2
     assert len(b) == 2
-    return [a[0] * (1 - t) + b[0] * t, a[1] * (1 - t) + b[1] * t]
+    return [int(a[0] * (1 - t) + b[0] * t), int(a[1] * (1 - t) + b[1] * t)]
 
 def sorted_by_x(points):
     """
@@ -322,26 +322,4 @@ def is_delonay_condition(p1, p2, p3, p4):
                 abs((p2[0] - p4[0]) * (p3[1] - p4[1]) - 
                     (p3[0] - p4[0]) * (p2[1] - p4[1])) * cA            
                 ) >= 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

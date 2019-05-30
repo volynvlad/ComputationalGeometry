@@ -13,9 +13,9 @@ def is_same(p):
 
 def is_intersect(p1, p2, p3, p4):
     assert len(p1) == 2
-    assert len(p1) == 2
-    assert len(p1) == 2
-    assert len(p1) == 2
+    assert len(p2) == 2
+    assert len(p3) == 2
+    assert len(p4) == 2
     """
     p1p2 (l1) - line
     p3p4 (l2) - line
