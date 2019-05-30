@@ -11,6 +11,7 @@ from MathHelper import perimeter
 from ConvexHull import dynamic_convex_hull
 from mutual_arrangement_segment_polygon import cyrus_beck
 from min_distance import findNearestPairOfPoints
+from min_distance import slow_min_dist
 from intersection_convex_polygon import common_polygon
 
 
@@ -405,7 +406,7 @@ def draw_lab9(p, q):
                 run = False
 
         window.fill(WHITE)
-        clock.tick(60)
+        clock.tick(10)
 
         pygame.draw.polygon(window, RED, cur_points_p)
         pygame.draw.polygon(window, GREEN, cur_points_q)
@@ -415,7 +416,7 @@ def draw_lab9(p, q):
             #points_p[i].draw(window, BLACK)
             points_p[i].move(size)
             cur_points_p[i] = points_p[i].get_point()
-            text_start = my_font.render("%d" % (i), False, GREEN_1)
+            text_start = my_font.render("%d" % (i), False, BLUE)
             window.blit(text_start, (points_p[i].get_point()[0], points_p[i].get_point()[1]))
 
        
@@ -423,7 +424,7 @@ def draw_lab9(p, q):
             #points_q[i].draw(window, BLACK)
             points_q[i].move(size)
             cur_points_q[i] = points_q[i].get_point()
-            text_start = my_font.render("%d" % (i), False, RED_1)
+            text_start = my_font.render("%d" % (i), False, BLACK)
             window.blit(text_start, (points_q[i].get_point()[0], points_q[i].get_point()[1]))
 
         common_points = common_polygon(cur_points_p, cur_points_q)
@@ -446,7 +447,23 @@ def draw_lab10(p):
     for i in p:
         points_move.append(Point.Point(i[0], i[1], 0, 0))
     result = []
-    print(findNearestPairOfPoints(p,result))
+    print("Slow")
+    print(slow_min_dist(p))
+    print("Fast")
+    print(findNearestPairOfPoints(p, result))
+    print("difference - ", slow_min_dist(p)[0] - findNearestPairOfPoints(p, result)[0])
+    T = True
+    for i in findNearestPairOfPoints(p, result)[1]:
+        if i not in slow_min_dist(p)[1]:
+            T = False
+    for i in slow_min_dist(p)[1]:
+        if i not in findNearestPairOfPoints(p, result)[1]:
+            T = False
+    if T:
+        print("same points")
+    else:
+        print("different point")
+    result = findNearestPairOfPoints(p, result)[1]
     run = True
     while run:
         for event in pygame.event.get():

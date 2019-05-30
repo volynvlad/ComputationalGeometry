@@ -1,5 +1,4 @@
 import math
-
 def min2(a, b):
     if a < b:
         return a
@@ -96,7 +95,7 @@ def point_min_by_x(p):
         if minimum[0] == i[0] and minimum[1] > i[0]:
             minimum = i
         if minimum[0] >= i[0]:
-           minimum = i
+            minimum = i
     return minimum
 
 
@@ -110,7 +109,7 @@ def point_max_by_x(p):
         if maximum[0] == i[0] and maximum[1] > i[0]:
             maximum = i
         if maximum[0] <= i[0]:
-           maximum = i
+            maximum = i
     return maximum
 
 
@@ -276,10 +275,11 @@ def sorted_by_x(points):
     return:
         sorted points by x
     """
+    points = points.copy()
     #assert points[0] == 2
     for i in range(len(points)):
         for j in range(len(points)):
-            if points[i][0] > points[j][0]:
+            if points[i][0] < points[j][0]:
                 points[i], points[j] = points[j], points[i]
 
     return points
@@ -291,6 +291,7 @@ def sorted_by_y(points):
     return:
         sorted points by y
     """
+    points = points.copy()
     #assert points[0] == 2
     for i in range(len(points)):
         for j in range(len(points)):

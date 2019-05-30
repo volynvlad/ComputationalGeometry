@@ -48,11 +48,9 @@ def common_polygon(p, q):
     while i < n and j < m:
         if is_look(p[i], p[i + 1], q[j], q[j + 1]) and is_look(q[j], q[j + 1] ,p[i + 1], p[i]): 
             if outer_window(p[i + 1], q[j], q[j + 1]):
-                result.append(q[j + 1])
                 result.append(p[i + 1])
                 i += 1
             else:
-                result.append(p[i + 1])
                 result.append(q[j + 1])
                 j += 1
             continue
