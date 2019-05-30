@@ -427,6 +427,8 @@ def draw_lab9(p, q):
             window.blit(text_start, (points_q[i].get_point()[0], points_q[i].get_point()[1]))
 
         common_points = common_polygon(cur_points_p, cur_points_q)
+        if len(common_points) > 0:
+            common_points = jarvis(common_points)
         if len(common_points) > 2:
             pygame.draw.polygon(window, BLUE, common_points)
 

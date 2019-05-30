@@ -1,6 +1,7 @@
 import random
 from IsSimple import is_simple
 from IsConvex import is_convex
+from PointRelative import is_right
 
 
 def generation_simple_polygon(minimum, maximum):
@@ -53,6 +54,9 @@ def generation_convex_polygon(minimum_x=100, minimum_y=100, maximum_x=700, maxim
     while p[0] != max_y_point:
         temp_point = p.pop(0)
         p.append(temp_point)
+
+    if is_right(p[0], p[1], p[2]):
+        p.reverse() 
 
     return p
 
