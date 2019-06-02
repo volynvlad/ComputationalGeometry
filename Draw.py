@@ -13,6 +13,11 @@ from mutual_arrangement_segment_polygon import cyrus_beck
 from min_distance import findNearestPairOfPoints
 from min_distance import slow_min_dist
 from intersection_convex_polygon import common_polygon
+from Triangulation_Delone import delone
+import Vector3D
+import Point3D
+import Quanterion
+import Cube
 
 
 
@@ -398,15 +403,22 @@ def draw_lab9(p, q):
     for i in q:
         points_q.append(Point.Point(i[0], i[1], -1, 0))
 
+    pause = False 
 
     run = True
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            if event.type == pygame.MOUSEBUTTONUP:
+                pause = not pause
 
         window.fill(WHITE)
-        clock.tick(10)
+        if pause:
+            clock.tick(0)
+            continue
+        else:
+            clock.tick(30)
 
         pygame.draw.polygon(window, RED, cur_points_p)
         pygame.draw.polygon(window, GREEN, cur_points_q)
@@ -426,12 +438,20 @@ def draw_lab9(p, q):
             cur_points_q[i] = points_q[i].get_point()
             text_start = my_font.render("%d" % (i), False, BLACK)
             window.blit(text_start, (points_q[i].get_point()[0], points_q[i].get_point()[1]))
-
-        common_points = common_polygon(cur_points_p, cur_points_q)
+    
+        if len(cur_points_p) > 2 and len(cur_points_q) > 2:
+            common_points = common_polygon(cur_points_p, cur_points_q)
         if len(common_points) > 0:
             common_points = jarvis(common_points)
         if len(common_points) > 2:
             pygame.draw.polygon(window, BLUE, common_points)
+        for i in common_points:
+            points_g.append(Point.Point(i[0], i[1], 1, 0))
+
+        for i in points_g:
+            i.draw(window, BLACK)
+
+        points_g.clear()
 
         pygame.display.flip()
 
@@ -482,7 +502,11 @@ def draw_lab10(p):
 
     pygame.quit()
 
-def draw_lab11(points):
+def draw_lab11():
+
+    points = []
+    sides = []
+
 
     pygame.display.set_caption('Cartoon')
     window = pygame.display.set_mode(size)
@@ -490,29 +514,80 @@ def draw_lab11(points):
 
     run = True
     while run:
+        window.fill(WHITE)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                    run = False
+                run = False
 
             if event.type == pygame.MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
-                point = Point.Point(pos[0], pos[1], 0, 0)
-                point = point.__copy__()
-                ch = dynamic_convex_hull(p, ch)
+                pos = list(pos)
+                points.append(pos)
+        if len(points) > 2:
+            delone(sides, points)
+            sides.append(sides[0])
+        for i in range(0, len(sides) - 1):
+            draw_arrow(window, RED, sides[i], sides[i + 1])
+        if sides != []:
+            sides.remove(sides[len(sides) - 1]) 
 
-        window.fill(WHITE)
+        for point in points:
+            pygame.draw.circle(window, BLACK, (point[0], point[1]), 2)
+
         clock.tick(30)
 
-        if ch != []:
-            for i in range(len(ch)):
-                draw_arrow(window, RED, [ch[i - 1].get_point()[0], ch[i -
-                    1].get_point()[1]],
-                        [ch[i].get_point()[0], ch[i].get_point()[1]], width = 3)
-        for i in range(len(p)):
-            p[i].draw(window, BLACK)
-            p[i].move(size)
 
         pygame.display.flip()
 
     pygame.quit()
 
+def draw_lab12():
+
+    cube = []
+    cent_point = []
+    rot_vector = []
+
+    v1 = Vector3D.Vector3D(0, 50, 0)
+    v2 = Vector3D.Vector3D(50, 0, 0)
+    p = Point3D.Point3D(100, 100, 200)
+    print(p)
+    print(v1)
+    print(v2)
+    cube = Cube.Cube(p, v1, v2, 40)
+    cent_point = Point3D.Point3D(0, 0, 100)
+    rot_vector = Vector3D.Vector3D(15, 20, 50)
+    lines = []
+    pygame.display.set_caption('Cartoon')
+    window = pygame.display.set_mode(size)
+    clock = pygame.time.Clock()
+
+    run = True
+    while run:
+
+        window.fill(WHITE)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        cube_sides = cube.get_sides()
+        for cube_side in cube_sides:
+            x1 = (cube_side[0].x * cent_point.z - cube_side[0].z * cent_point.x) / (cent_point.z - cube_side[0].z)
+            y1 = (cube_side[0].y * cent_point.z - cube_side[0].z * cent_point.y) / (cent_point.z - cube_side[0].z)
+            x2 = (cube_side[1].x * cent_point.z - cube_side[1].z * cent_point.x) / (cent_point.z - cube_side[1].z)
+            y2 = (cube_side[1].y * cent_point.z - cube_side[1].z * cent_point.y) / (cent_point.z - cube_side[1].z)
+        
+            lines.append([[x1, y1], [x2, y2]])
+
+        for line in lines:
+            draw_arrow(window, BLACK, line[0], line[1], 2)
+        
+        lines.clear()
+
+        cube.rotate(rot_vector)
+
+
+        clock.tick(3)
+
+        pygame.display.flip()
+
+    pygame.quit()

@@ -178,6 +178,10 @@ def main_lab10():
 def main_lab11():
     draw_lab11()
 
+def main_lab12():
+    draw_lab12()
+
+
 if __name__ == "__main__":
     x = sys.argv[1]
     print("lab - ", x)
@@ -204,3 +208,5 @@ if __name__ == "__main__":
         main_lab10()
     elif x == '11':
         main_lab11()
+    elif x == '12':
+        main_lab12()

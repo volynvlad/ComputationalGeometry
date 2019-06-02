@@ -1,23 +1,23 @@
-from Draw import draw_arrow
 import math
 import itertools
+from PointRelative import is_left
 
 
 class Triangle:
-    newid = itertools.count().next
+    #newid = itertools.count()
     def __init__(self, points):
         assert len(points) == 3
-        self.point1 = p[0]
-        if pR.is_left(points[0].get_point(), points[1].get_point(), points[2].get_point()):
-                self.point2 = p[1]
-                self.point3 = p[2]
-            else:
-                self.point2 = p[2]
-                self.point3 = p[1]
+        self.point1 = points[0]
+        if is_left(points[0], points[1], points[2]):
+                self.point2 = points[1]
+                self.point3 = points[2]
+        else:
+            self.point2 = points[2]
+            self.point3 = points[1]
 
-        self.id = resource_cl.newid()
-        self.neighbors = []
-        print("init triangle - %d" % self.id)
+        #self.id = next(newid)
+        #self.neighbors = []
+        #print("init triangle - %d" % self.id)
 
 
     def draw(self, window, color):
@@ -28,7 +28,8 @@ class Triangle:
    
     def getPoints(self):
        return [self.point1, self.point2, self.point3]
-
+    
+    """
     def getid(self):
         return self.id
 
@@ -46,4 +47,4 @@ class Triangle:
 
     def getneighbors(self):
         return self.neighbors
-
+    """

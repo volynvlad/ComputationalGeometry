@@ -20,13 +20,16 @@ def determinant(p1, p2, p):
     return (p2[0] - p1[0])*(p[1] - p1[1]) - (p2[1] - p1[1])*(p[0] - p1[0])
 
 
-def length(p1, p2):
+def length(p1, p2 = [0, 0]):
     assert len(p1) == 2
     assert len(p2) == 2
     return math.sqrt((p1[0] - p2[0])*(p1[0] - p2[0]) + (p1[1] - p2[1])*(p1[1] - p2[1]))
 
 
 def angle(p1, p0, p2):
+    """
+    returns angle p1p0p2 
+    """
     assert len(p1) == 2
     assert len(p0) == 2
     assert len(p2) == 2
@@ -148,6 +151,12 @@ def cos_num_abs(p1, p2):
 
     return math.fabs(p2[0] - p1[0]) / length(p1, p2)
 
+def cos_3points(p1, p0, p2):
+    v1 = vector1(p0, p1)
+    v2 = vector1(p0, p2)
+
+    return scalar(v1, v2) / (length(p1, p0) * length(p2, p0))
+
 
 def scalar(p1, p2):
     assert len(p1) == 2
@@ -179,10 +188,6 @@ def distance(p1, p2, p):
     return abs(A * p[0] + B * p[1] + C) / math.sqrt(A ** 2 + B ** 2)
 
 
-def scalar_prod(p1, p2):
-    return p1[0] * p2[0] + p1[1] * p2[1]
-
-
 def gcd(a, b):
     assert a > 0
     assert b > 0
@@ -197,7 +202,7 @@ def mcd(a, b):
     return (a / gcd(a, b)) * b
 
 
-def get_intersaction_point(line1, line2):
+def get_intersection_point(line1, line2):
     assert len(line1) == 2
     assert len(line2) == 2
     assert len(line1[0]) == 2
@@ -223,18 +228,18 @@ def get_intersaction_point(line1, line2):
     if B2 == 0:
         x = line2[0][0]
     if x != [] and y != []: # lines - (horizontal and vertical)
-        return x, y
+        return [x, y]
     else:
         if x != []: # one line horizontal
             if B1 == 0:
-                return x, -(C2 + A2 * x) / B2
+                return [x, -(C2 + A2 * x) / B2]
             else:
-                return x, -(C1 + A1 * x) / B1
+                return [x, -(C1 + A1 * x) / B1]
         elif y != []: # one line vertical
             if A1 == 0:
-                return -(B2 * y + C2) / A2, y
+                return [-(B2 * y + C2) / A2, y]
             else:
-                return -(B1 * y + C1) / A1, y
+                return [-(B1 * y + C1) / A1, y]
         else: # 2 lines neither vertical not horizontal
             if A1 < 0:
                 A1 = -A1
@@ -254,7 +259,7 @@ def get_intersaction_point(line1, line2):
 
             y = -(C1 - C2) / (B1 - B2)
             x = -(B1 * y + C1) / A1
-            return x, y
+            return [x, y]
 
 
 def param_t_for_line(start, point, end):
@@ -323,4 +328,56 @@ def is_delonay_condition(p1, p2, p3, p4):
                 abs((p2[0] - p4[0]) * (p3[1] - p4[1]) - 
                     (p3[0] - p4[0]) * (p2[1] - p4[1])) * cA            
                 ) >= 0
+
+def is_distinct_points(points, point_q):
+    assert len(point_q) == 2
+    assert len(points) > 0
+    result = True
+    for point in points:
+        if point == point_q:
+            result = False
+            break
+    return result
+
+def start_line(points):
+    first = point_min(points)
+    max_cos = -1
+    for point in points:
+        if first != point: 
+            cos_tmp = cos_num(first, point) 
+            if cos_tmp > max_cos and point != first: 
+                max_cos = cos_tmp
+                second = point
+    return [first, second]
+
+
+def angle_between_vectors(v1, v2):
+    return math.acos(scalar(v1, v2) / (length(v1) * length(v2)) )
+
+
+def biggest_angle(points, q1, q2):
+    angle = 0
+    result = []
+    for point in points:
+        if point != q1 and point != q2:
+            angle_tmp = angle_between_vectors(vector1(point, q1), vector1(point, q2))
+            if angle_tmp > angle and determinant(q1, q2, point) < 0:
+                angle = angle_tmp
+                result = point
+    return result
+
+def exists(a, b, c, arr):
+    """
+    a, b, c - points
+    arr - array of sides
+    """
+    for i in range(len(arr) - 3):
+        tmp_sides = arr[i:i + 3]
+        if a in tmp_sides and b in tmp_sides and c in tmp_sides:
+            return True
+    return False
+
+
+
+
 

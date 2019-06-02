@@ -8,7 +8,7 @@ from MathHelper import point_max_by_x
 from MathHelper import point_min_by_x
 from MathHelper import triangle_square
 from MathHelper import determinant as det
-from MathHelper import scalar_prod
+from MathHelper import scalar
 
 import math
 
@@ -183,11 +183,11 @@ def dynamic_convex_hull(p, ch):
         if p[0] == p[1] and p[0] == p[2]:
             return p[0]
         if det(p[0].get_point(), p[1].get_point(), p[2].get_point()) == 0:
-            if scalar_prod(p[0].get_point(), p[1].get_point()) * scalar_prod(p[0].get_point(), p[2].get_point()) < 0:
+            if scalar(p[0].get_point(), p[1].get_point()) * scalar(p[0].get_point(), p[2].get_point()) < 0:
                 return [p[1], p[2]]
-            elif scalar_prod(p[1].get_point(), p[2].get_point()) * scalar_prod(p[1].get_point(), p[0].get_point()) < 0:
+            elif scalar(p[1].get_point(), p[2].get_point()) * scalar(p[1].get_point(), p[0].get_point()) < 0:
                 return [p[0], p[2]]
-            elif scalar_prod(p[2].get_point(), p[0].get_point()) * scalar_prod(p[2].get_point(), p[1].get_point()) < 0:
+            elif scalar(p[2].get_point(), p[0].get_point()) * scalar(p[2].get_point(), p[1].get_point()) < 0:
                 return [p[0], p[1]]
         else:
             if pR.is_left(p[0].get_point(), p[1].get_point(), p[2].get_point()):

@@ -1,4 +1,4 @@
-from MathHelper import get_intersaction_point as gtp
+from MathHelper import get_intersection_point as gtp
 from MathHelper import param_t_for_line as par_t
 from MathHelper import point_from_param_t
 from MathHelper import vector1
@@ -77,7 +77,7 @@ def cyrus_beck(p, line):
         return []
     elif t0 == t1:
         print("t0 == t1")
-        result.add(point_from_param_t(t0))
+        result.append(point_from_param_t(t0))
         return result
     else: #t0 < t1
         return [point_from_param_t(a, b, t0), point_from_param_t(a, b, t1)]
