@@ -71,8 +71,6 @@ def triangulation_delaunay(triangles, points):
                     new_triangle = Triangle.Triangle([temp_triangles[0].getPoints()[i - 1], temp_triangles[0].getPoints()[i], last_point])
                     triangles.add(new_triangle)
                     for neighbor in temp_triangles[0].getneighbors():
-                        if temp_triangles[0].getPoints()[i - 1] in neighbor.getPoints() and temp_triangles[0].getPoints()[i] in neighbor.getPoints():
-                            neighbor.addneighbor(new_triangle)
 """
 
 def find(p1, p2, points, tri_sides):
