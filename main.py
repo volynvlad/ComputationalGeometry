@@ -156,6 +156,8 @@ def main_lab8():
     p = [[600, 600], [200, 600], [200, 200], [600, 200]]
 
     lines = [[[random.randint(100, 700), random.randint(100, 700)], [random.randint(100, 700), random.randint(100, 700)]] for _ in range(num)]
+    
+    lines.append([[400, 600], [800, 600]])
 
     draw_lab8(p, lines)
 

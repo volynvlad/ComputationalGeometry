@@ -547,15 +547,12 @@ def draw_lab12():
     cent_point = []
     rot_vector = []
 
-    v1 = Vector3D.Vector3D(0, 50, 0)
-    v2 = Vector3D.Vector3D(50, 0, 0)
-    p = Point3D.Point3D(100, 100, 200)
-    print(p)
-    print(v1)
-    print(v2)
-    cube = Cube.Cube(p, v1, v2, 40)
-    cent_point = Point3D.Point3D(0, 0, 100)
-    rot_vector = Vector3D.Vector3D(15, 20, 50)
+    v1 = Vector3D.Vector3D(1, 0,  0)
+    v2 = Vector3D.Vector3D(0, 1, 0)
+    p = Point3D.Point3D(300, 300, 400)
+    cube = Cube.Cube(p, v1, v2, 150)
+    cent_point = Point3D.Point3D(0, 0, -50)
+    rot_vector = Vector3D.Vector3D(30, 150, 300)
     lines = []
     pygame.display.set_caption('Cartoon')
     window = pygame.display.set_mode(size)
@@ -571,22 +568,21 @@ def draw_lab12():
 
         cube_sides = cube.get_sides()
         for cube_side in cube_sides:
-            x1 = (cube_side[0].x * cent_point.z - cube_side[0].z * cent_point.x) / (cent_point.z - cube_side[0].z)
-            y1 = (cube_side[0].y * cent_point.z - cube_side[0].z * cent_point.y) / (cent_point.z - cube_side[0].z)
-            x2 = (cube_side[1].x * cent_point.z - cube_side[1].z * cent_point.x) / (cent_point.z - cube_side[1].z)
-            y2 = (cube_side[1].y * cent_point.z - cube_side[1].z * cent_point.y) / (cent_point.z - cube_side[1].z)
+            x1 = (cube_side[0].x - cent_point.x) * ((cube_side[0].z - cent_point.z) / cube_side[0].z)
+            y1 = (cube_side[0].y - cent_point.y) * ((cube_side[0].z - cent_point.z) / cube_side[0].z)
+            x2 = (cube_side[1].x - cent_point.x) * ((cube_side[1].z - cent_point.z) / cube_side[1].z)
+            y2 = (cube_side[1].y - cent_point.y) * ((cube_side[1].z - cent_point.z) / cube_side[1].z)
         
             lines.append([[x1, y1], [x2, y2]])
 
         for line in lines:
-            draw_arrow(window, BLACK, line[0], line[1], 2)
-        
+            draw_arrow(window, BLACK, line[0], line[1], width=2)
         lines.clear()
 
         cube.rotate(rot_vector)
 
 
-        clock.tick(3)
+        clock.tick(10)
 
         pygame.display.flip()
 

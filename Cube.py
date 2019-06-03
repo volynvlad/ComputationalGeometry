@@ -13,16 +13,17 @@ def rotate(vector, point):
     q_y  = vector.y * math.sin(rotate_angle / 2)
     q_z  = vector.z * math.sin(rotate_angle / 2)
     
-    quant = Quanterion(q_re, q_x, q_y, q_z)
+    quant_vect = Quanterion(q_re, q_x, q_y, q_z)
 
     p_re = 0
-    p_x  = vector.x * math.sin(rotate_angle / 2)
-    p_y  = vector.y * math.sin(rotate_angle / 2)
-    p_z  = vector.z * math.sin(rotate_angle / 2)
+    p_x  = point.x 
+    p_y  = point.y
+    p_z  = point.z
 
-    point_quant = Quanterion(p_re, p_x, p_y, p_z)
+    quant_point = Quanterion(p_re, p_x, p_y, p_z)
 
-    new_quant = quant.mult(point_quant).mult(quant.reverse())
+    tmp_quant = quant_vect.mult(quant_point)
+    new_quant = tmp_quant.mult(quant_vect.reverse())
     point.x = new_quant.i
     point.y = new_quant.j
     point.z = new_quant.k
@@ -35,7 +36,7 @@ class Cube:
         v1 = v1.vect_mult(length)
         v2 = v2.vect_mult(length)
 
-        v3 = v1.vect_prod(v2).vect_mult(length) 
+        v3 = v1.vect_prod(v2).vect_divide(length) 
 
         p1 = point.add_Vector3D(v1)
         p2 = point.add_Vector3D(v2)
@@ -73,4 +74,8 @@ class Cube:
 
                 [self.points[6], self.points[7]],
                 ]
+    
+    def print_Cube(self):
+        print(self.points[0].get_Point3D(), self.points[1].get_Point3D(), self.points[2].get_Point3D(), self.points[3].get_Point3D(),
+              self.points[4].get_Point3D() ,self.points[5].get_Point3D(), self.points[6].get_Point3D(), self.points[7].get_Point3D())
 

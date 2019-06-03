@@ -8,3 +8,7 @@ class Point3D:
 
     def add_Vector3D(self, v):
         return Point3D(self.x + v.x, self.y + v.y, self.z + v.z)
+
+    def get_Point3D(self):
+        return [self.x, self.y, self.z]
+

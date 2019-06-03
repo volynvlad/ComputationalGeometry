@@ -26,9 +26,9 @@ class Vector3D:
         return math.sqrt(self.x * self.x + self.y * self.y + self.z * self.z)
 
     def norm(self):
-        x = self.x / int(self.length())
-        y = self.y / int(self.length())
-        z = self.z / int(self.length())
+        x = self.x / self.length()
+        y = self.y / self.length()
+        z = self.z / self.length()
         return Vector3D(x, y, z)
 
     def vect_prod(self, v):        
@@ -40,5 +40,12 @@ class Vector3D:
     def vect_mult(self, num):
         return Vector3D(self.x * num, self.y * num, self.z * num)
 
+    def vect_divide(self, num):
+        return Vector3D(self.x / num, self.y / num, self.z / num)
 
+    def print_vect(self):
+        print("x = ", self.x, " y = ", self.y, " z = ", self.z)
+    
+    def get_vect(self):
+        return [self.x, self.y, self.z]
 
