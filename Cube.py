@@ -6,7 +6,7 @@ from Quanterion import Quanterion
 
 def rotate(vector, point):
     vector = vector.norm()
-    rotate_angle = math.pi / 256
+    rotate_angle = math.pi / 70
     
     q_re = math.cos(rotate_angle / 2)
     q_x  = vector.x * math.sin(rotate_angle / 2)

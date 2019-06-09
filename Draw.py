@@ -18,6 +18,7 @@ import Vector3D
 import Point3D
 import Quanterion
 import Cube
+from projection import central_projection
 
 
 
@@ -541,19 +542,8 @@ def draw_lab11():
 
     pygame.quit()
 
-def draw_lab12():
+def draw_lab12(cube, rot_vector, cent_point):
 
-    cube = []
-    cent_point = []
-    rot_vector = []
-
-    v1 = Vector3D.Vector3D(1, 0,  0)
-    v2 = Vector3D.Vector3D(0, 1, 0)
-    p = Point3D.Point3D(300, 300, 400)
-    cube = Cube.Cube(p, v1, v2, 150)
-    cent_point = Point3D.Point3D(0, 0, -50)
-    rot_vector = Vector3D.Vector3D(30, 150, 300)
-    lines = []
     pygame.display.set_caption('Cartoon')
     window = pygame.display.set_mode(size)
     clock = pygame.time.Clock()
@@ -567,13 +557,8 @@ def draw_lab12():
                 run = False
 
         cube_sides = cube.get_sides()
-        for cube_side in cube_sides:
-            x1 = (cube_side[0].x - cent_point.x) * ((cube_side[0].z - cent_point.z) / cube_side[0].z)
-            y1 = (cube_side[0].y - cent_point.y) * ((cube_side[0].z - cent_point.z) / cube_side[0].z)
-            x2 = (cube_side[1].x - cent_point.x) * ((cube_side[1].z - cent_point.z) / cube_side[1].z)
-            y2 = (cube_side[1].y - cent_point.y) * ((cube_side[1].z - cent_point.z) / cube_side[1].z)
         
-            lines.append([[x1, y1], [x2, y2]])
+        lines = central_projection(cube_sides, cent_point)
 
         for line in lines:
             draw_arrow(window, BLACK, line[0], line[1], width=2)
@@ -582,7 +567,7 @@ def draw_lab12():
         cube.rotate(rot_vector)
 
 
-        clock.tick(10)
+        clock.tick(60)
 
         pygame.display.flip()
 

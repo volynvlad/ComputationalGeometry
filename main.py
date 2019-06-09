@@ -11,6 +11,11 @@ from ConvexHull import convex_hull
 from ConvexHull import jarvis
 from Generate import generation_convex_polygon
 import sys
+import Vector3D
+import Point3D
+import Cube
+
+
 
 def main_lab1():
     run = True
@@ -181,7 +186,15 @@ def main_lab11():
     draw_lab11()
 
 def main_lab12():
-    draw_lab12()
+
+    v1 = Vector3D.Vector3D(1, 0,  0)
+    v2 = Vector3D.Vector3D(0, 1, 0)
+    p = Point3D.Point3D(100, 100, 900)
+    cube = Cube.Cube(p, v1, v2, 150)
+    cent_point = Point3D.Point3D(0, 0, -1000)
+    rot_vector = Vector3D.Vector3D(50, 30, 300)
+    
+    draw_lab12(cube, rot_vector, cent_point)
 
 
 if __name__ == "__main__":
